@@ -1,0 +1,28 @@
+body {
+    font-family: sans-serif;
+    background: #aaa;
+    width: 602px;
+    margin: 0 auto;
+}
+
+#map {
+    border: 1px solid black;
+    margin: 0;
+}
+
+#date {
+    position: absolute;
+    top: 0px;
+    text-align: left;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.2);
+    width: 150px;
+    padding: 3px;
+    color: #000;
+    font-size: 14px;
+}
+
+#graph {
+    border: 1px solid black;
+    margin: 0;
+}

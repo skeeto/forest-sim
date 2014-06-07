@@ -30,12 +30,8 @@ function Forest(n) {
     this.timer = null;
     this.ctx = $('#map').getContext('2d');
     this.dateDOM = $('#date');
+    this.callbacks = [];
 }
-
-Forest.MONTHS = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-];
 
 Forest.DIRECTIONS = [
     {x:  1, y: -1},
@@ -127,6 +123,7 @@ Forest.prototype.stepTree = function(x, y) {
             return _this.get(x + d.x, y + d.y).tree == 0;
         });
         if (avail.length > 0) {
+            this.ntree++;
             var d = avail[Math.floor(Math.random() * avail.length)];
             this.get(x + d.x, y + d.y).tree = 1;
         }
@@ -209,6 +206,7 @@ Forest.prototype.step = function() {
         }
     }
     if ((this.month % 12) == 0) {
+        this.callbacks.forEach(function(c) { c(); });
         this.stepYear();
     }
     this.month++;
@@ -217,8 +215,8 @@ Forest.prototype.step = function() {
 
 Forest.prototype.date = function() {
     var year = Math.floor((this.month - 1) / 12);
-    var month = Forest.MONTHS[(this.month - 1) % 12];
-    return 'Year ' + year + ', ' + month;
+    var month = ((this.month - 1) % 12) + 1;
+    return 'Year ' + year + ', Month ' + month;
 };
 
 Forest.prototype.draw = function() {
