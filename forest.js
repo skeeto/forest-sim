@@ -215,12 +215,18 @@ Forest.prototype.step = function() {
     return this;
 };
 
+Forest.prototype.date = function() {
+    var year = Math.floor((this.month - 1) / 12);
+    var month = Forest.MONTHS[(this.month - 1) % 12];
+    return 'Year ' + year + ', ' + month;
+};
+
 Forest.prototype.draw = function() {
     var ctx = this.ctx,
         s = ctx.canvas.width / this.size;
     for (var y = 0; y < this.size; y++) {
         for (var x = 0; x < this.size; x++) {
-            var style = '#fff',
+            var style = '#bb7',
                 cell = this.get(x, y);
             if (cell.lumberjack) {
                 style = '#f00';
@@ -237,9 +243,7 @@ Forest.prototype.draw = function() {
             ctx.fillRect(x * s, y * s, s, s);
         }
     }
-    var year = Math.floor((this.month - 1) / 12);
-    var month = Forest.MONTHS[(this.month - 1) % 12];
-    this.dateDOM.innerHTML = 'Year ' + year + ', ' + month;
+    this.dateDOM.innerHTML = this.date();
     return this;
 };
 
@@ -250,11 +254,13 @@ Forest.prototype.start = function(speed) {
             _this.step().draw();
         }, speed || 100);
     }
+    return this;
 };
 
 Forest.prototype.stop = function() {
     clearInterval(this.timer);
     this.timer = null;
+    return this;
 };
 
 Forest.prototype.toggle = function() {
@@ -263,4 +269,5 @@ Forest.prototype.toggle = function() {
     } else {
         this.stop();
     }
+    return this;
 };
